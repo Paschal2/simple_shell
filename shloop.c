@@ -15,24 +15,24 @@ int hsh(info_t *inf, char **av)
 	while (s != -1 && builtin_ret != -2)
 	{
 		clear_info(inf);
-		if (interactive(inf))
+		if (active(inf))
 			_puts("$ ");
 		_eputchar(BUF_FLUSH);
-		r = get_input(inf);
-		if (r != -1)
+		s = get_input(inf);
+		if (s != -1)
 		{
 			set_info(inf, av);
 			builtin_ret = find_builtin(inf);
 			if (builtin_ret == -1)
 				find_cmd(inf);
 		}
-		else if (interactive(inf))
+		else if (active(inf))
 			_putchar('\n');
 		free_info(inf, 0);
 	}
 	write_history(inf);
 	free_info(inf, 1);
-	if (!interactive(inf) && inf->status)
+	if (!active(inf) && inf->status)
 		exit(inf->status);
 	if (builtin_ret == -2)
 	{
@@ -95,7 +95,7 @@ void find_cmd(info_t *inf)
 		inf->linecount_flag = 0;
 	}
 	for (b = 0, a = 0; inf->arg[b]; b++)
-		if (!is_delim(info->arg[b], " \t\n"))
+		if (!is_meter(inf->arg[b], " \t\n"))
 			a++;
 	if (!a)
 		return;
@@ -108,13 +108,13 @@ void find_cmd(info_t *inf)
 	}
 	else
 	{
-		if ((interactive(inf) || _getenv(inf, "PATH=")
+		if ((active(inf) || _getenv(inf, "PATH=")
 					|| inf->argv[0][0] == '/') && is_cmd(inf, inf->argv[0]))
 			fork_cmd(inf);
 		else if (*(inf->arg) != '\n')
 		{
 			inf->status = 127;
-			print_error(inf, "not found\n");
+			print_err(inf, "not found\n");
 		}
 	}
 }
@@ -138,7 +138,7 @@ void fork_cmd(info_t *inf)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(inf->path, inf->argv, get_environ(inf)) == -1)
+		if (execve(inf->path, inf->argv, _getenviron(inf)) == -1)
 		{
 			free_info(inf, 1);
 			if (errno == EACCES)
