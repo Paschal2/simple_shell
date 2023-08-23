@@ -2,7 +2,7 @@
 
 /**
  * mode - returns true if shell is interactive mode
- * @info: struct address by Paschal and Co
+ * @inf: struct address by Paschal and Co
  *
  * Return: 1 if interactive mode, 0 otherwise
  */
@@ -13,10 +13,11 @@ int mode(info_t *inf)
 
 /**
  * is_meter - checks if character is a delimeter
- * @c: the char to check
- * @delim: the delimeter string
+ * @a: the char to check
+ * @meter: the delimeter string
  * Return: 1 if true, 0 if false
- */int is_meter(char a, char *meter)
+ */
+int is_meter(char a, char *meter)
 {
 	while (*meter)
 		if (*meter++ == a)
@@ -26,8 +27,8 @@ int mode(info_t *inf)
 
 /**
  * _isbetic - checks for alphabetic character
- * @c: The character to input
- * Return: 1 if c is alphabetic, 0 otherwise
+ * @d: the character to input
+ * Return: 1 if d is alphabetic, 0 otherwise
  */
 
 int _isbetic(int d)
@@ -40,7 +41,7 @@ int _isbetic(int d)
 
 /**
  * _ototr - converts a string to an integer
- * @s: the string to be converted
+ * @a: the string to be converted
  * Return: 0 if no numbers in string, converted number otherwise
  */
 
@@ -69,5 +70,5 @@ int _ototr(char *a)
 	else
 		output = result;
 
-	return (output);
+	return (0);
 }

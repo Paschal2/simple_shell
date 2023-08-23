@@ -2,7 +2,7 @@
 
 /**
  * get_history_file - gets the history file
- * @info: parameter struct
+ * @inf: parameter struct
  *
  * Return: allocated string containg history file
  */
@@ -26,7 +26,7 @@ char *get_history_file(info_t *inf)
 
 /**
  * write_history - creates a file, or appends to an existing file
- * @info: the parameter struct
+ * @inf: the parameter struct
  *
  * Return: 1 on success, else -1
  */
@@ -34,7 +34,7 @@ int write_history(info_t *inf)
 {
 	ssize_t fd;
 	char *filename = get_history_file(inf);
-	list_t *mode = NULL;
+	list_t *node = NULL;
 
 	if (!filename)
 		return (-1);
@@ -43,9 +43,9 @@ int write_history(info_t *inf)
 	free(filename);
 	if (fd == -1)
 		return (-1);
-	for (mode = inf->history; mode; mode = mode->next)
+	for (node = inf->history; node; node = node->next)
 	{
-		_putsfd(mode->str, fd);
+		_putsfd(node->str, fd);
 		_putfd('\n', fd);
 	}
 	_putfd(BUF_FLUSH, fd);
@@ -55,7 +55,7 @@ int write_history(info_t *inf)
 
 /**
  * read_history - reads history from file
- * @info: the parameter struct
+ * @inf: the parameter struct
  *
  * Return: histcount on success, 0 otherwise
  */
@@ -95,49 +95,49 @@ int read_history(info_t *inf)
 	if (last != i)
 		build_history_list(inf, buff + last, linecount++);
 	free(buff);
-	info->histcount = linecount;
+	inf->histcount = linecount;
 	while (inf->histcount-- >= HIST_MAX)
-		delete_mode_at_index(&(inf->history), 0);
+		delete_node_at_index(&(inf->history), 0);
 	renumber_history(inf);
 	return (inf->histcount);
 }
 
 /**
  * build_history_list - adds entry to a history linked list
- * @info: Structure containing potential arguments. Used to maintain
- * @buf: buffer
+ * @inf: Structure containing potential arguments. Used to maintain
+ * @buff: buffer
  * @linecount: the history linecount, histcount
  *
  * Return: Always 0
  */
 int build_history_list(info_t *inf, char *buff, int linecount)
 {
-	list_t *mode = NULL;
+	list_t *node = NULL;
 
 	if (inf->history)
-		mode = inf->history;
-	add_mode_end(&mode, buff, linecount);
+		node = inf->history;
+	add_mode_end(&node, buff, linecount);
 
 	if (!inf->history)
-		inf->history = mode;
+		inf->history = node;
 	return (0);
 }
 
 /**
  * renumber_history - renumbers the history linked list after changes
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *
  * Return: the new histcount
  */
 int renumber_history(info_t *inf)
 {
-	list_t *mode = inf->history;
+	list_t *node = inf->history;
 	int b = 0;
 
-	while (mode)
+	while (node)
 	{
-		mode->num = b++;
-		mode = mode->next;
+		node->num = b++;
+		node = node->next;
 	}
 	return (inf->histcount = b);
 }

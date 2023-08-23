@@ -2,8 +2,8 @@
 
 /**
  * input_buf - buffers chained commands
- * @info: parameter struct
- * @buf: address of buffer
+ * @inf: parameter struct
+ * @buff: address of buffer
  * @len: address of len var
  *
  * Return: bytes read
@@ -20,7 +20,7 @@ ssize_t input_buf(info_t *inf, char **buff, size_t *len)
 		*buff = NULL;
 		signal(SIGINT, sigintHandler);
 #if USE_GETLINE
-		r = getline(buf, &len_p, stdin);
+		r = getline(buff, &len_p, stdin);
 #else
 		r = _getline(inf, buff, &len_p);
 #endif
@@ -31,13 +31,13 @@ ssize_t input_buf(info_t *inf, char **buff, size_t *len)
 				(*buff)[r - 1] = '\0'; /* remove trailing newline */
 				r--;
 			}
-			info->linecount_flag = 1;
-			remove_comments(*buff);
+			inf->linecount_flag = 1;
+			rm_comments(*buff);
 			build_history_list(inf, *buff, inf->histcount++);
-			/* if (_strchr(*buf, ';')) is this a command chain? */
+			/* if (_strchr(*buff, ';')) is this a command chain? */
 			{
 				*len = r;
-				inf->cmd_buff = buff;
+				inf->cmd_buf = buff;
 			}
 		}
 	}
@@ -46,7 +46,7 @@ ssize_t input_buf(info_t *inf, char **buff, size_t *len)
 
 /**
  * get_input - gets a line minus the newline
- * @info: parameter struct
+ * @inf: parameter struct
  *
  * Return: bytes read
  */
@@ -55,15 +55,15 @@ ssize_t get_input(info_t *inf)
 	static char *buff; /* the ';' command chain buffer */
 	static size_t i, j, len;
 	ssize_t r = 0;
-	char **buff_p = &(inf->arg), *p;
+	char **buf_p = &(inf->arg), *p;
 
-	_putchar(BUFF_FLUSH);
-	r = input_buff(inf, &buff, &len);
+	_putchar(BUF_FLUSH);
+	r = input_buf(inf, &buff, &len);
 	if (r == -1) /* EOF */
 		return (-1);
 	if (len) /* we have commands left in the chain buffer */
 	{
-		j = i; /* init new iterator to current buf position */
+		j = i; /* init new iterator to current buff position */
 		p = buff + i; /* get pointer for return */
 
 		check_chain(inf, buff, &j, i, len);
@@ -78,32 +78,32 @@ ssize_t get_input(info_t *inf)
 		if (i >= len) /* reached end of buffer? */
 		{
 			i = len = 0; /* reset position and length */
-			inf->cmd_buff_type = CMD_NORM;
+			inf->cmd_buf_type = CMD_NORM;
 		}
 
-		*buff_p = p; /* pass back pointer to current command position */
+		*buf_p = p; /* pass back pointer to current command position */
 		return (_strlen(p)); /* return length of current command */
 	}
 
-	*buff_p = buff; /* else not a chain, pass back buffer from _getline() */
+	*buf_p = buff; /* else not a chain, pass back buffer from _getline() */
 	return (r); /* return length of buffer from _getline() */
 }
 
 /**
  * read_buf - reads a buffer
- * @info: parameter struct
- * @buf: buffer
+ * @inf: parameter struct
+ * @buff: buffer
  * @i: size
  *
  * Return: r
  */
-ssize_t read_buff(info_t *inf, char *buff, size_t *i)
+ssize_t read_buf(info_t *inf, char *buff, size_t *i)
 {
 	ssize_t r = 0;
 
 	if (*i)
 		return (0);
-	r = read(inf->readfd, buff, READ_BUFF_SIZE);
+	r = read(inf->readfd, buff, READ_BUF_SIZE);
 	if (r >= 0)
 		*i = r;
 	return (r);
@@ -111,7 +111,7 @@ ssize_t read_buff(info_t *inf, char *buff, size_t *i)
 
 /**
  * _getline - gets the next line of input from STDIN
- * @info: parameter struct
+ * @inf: parameter struct
  * @ptr: address of pointer to buffer, preallocated or NULL
  * @length: size of preallocated ptr buffer if not NULL
  *
@@ -119,7 +119,7 @@ ssize_t read_buff(info_t *inf, char *buff, size_t *i)
  */
 int _getline(info_t *inf, char **ptr, size_t *length)
 {
-	static char buff[READ_BUFF_SIZE];
+	static char buff[READ_BUF_SIZE];
 	static size_t b, len;
 	size_t k;
 	ssize_t r = 0, s = 0;
@@ -131,7 +131,7 @@ int _getline(info_t *inf, char **ptr, size_t *length)
 	if (b == len)
 		b = len = 0;
 
-	r = read_buff(info, buff, &len);
+	r = read_buf(inf, buff, &len);
 	if (r == -1 || (r == 0 && len == 0))
 		return (-1);
 
@@ -142,9 +142,9 @@ int _getline(info_t *inf, char **ptr, size_t *length)
 		return (p ? free(p), -1 : -1);
 
 	if (s)
-		_strncat(new_p, buf + b, k - b);
+		_strncat(new_p, buff + b, k - b);
 	else
-		_strncpy(new_p, buf + b, k - b + 1);
+		_strncpy(new_p, buff + b, k - b + 1);
 
 	s += k - b;
 	b = k;

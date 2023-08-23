@@ -2,7 +2,7 @@
 
 /**
  * clear_info - initializes info_t struct
- * @info: struct address
+ * @inf: struct address
  */
 void clear_info(info_t *inf)
 {
@@ -14,7 +14,7 @@ void clear_info(info_t *inf)
 
 /**
  * set_info - initializes info_t struct
- * @info: struct address
+ * @inf: struct address
  * @av: argument vector
  */
 void set_info(info_t *inf, char **av)
@@ -36,7 +36,7 @@ void set_info(info_t *inf, char **av)
 		}
 		for (b = 0; inf->argv && inf->argv[b]; b++)
 			;
-		info->argc = b;
+		inf->argc = b;
 
 		replace_alias(inf);
 		replace_vars(inf);
@@ -45,7 +45,7 @@ void set_info(info_t *inf, char **av)
 
 /**
  * free_info - frees info_t struct fields
- * @info: struct address
+ * @inf: struct address
  * @all: true if freeing all fields
  */
 void free_info(info_t *inf, int all)
@@ -55,7 +55,7 @@ void free_info(info_t *inf, int all)
 	inf->path = NULL;
 	if (all)
 	{
-		if (!inf->cmd_buff)
+		if (!inf->cmd_buf)
 			free(inf->arg);
 		if (inf->env)
 			free_list(&(inf->env));
@@ -65,9 +65,9 @@ void free_info(info_t *inf, int all)
 			free_list(&(inf->alias));
 		ffree(inf->environ);
 			inf->environ = NULL;
-		bfree((void **)inf->cmd_buff);
+		bfree((void **)inf->cmd_buf);
 		if (inf->readfd > 2)
 			close(inf->readfd);
-		_putchar(BUFF_FLUSH);
+		_putchar(BUF_FLUSH);
 	}
 }

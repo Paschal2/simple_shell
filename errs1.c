@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * _erratoi - converts a string to an integer
- * @s: the string to be converted
+ * _errors - converts a string to an integer
+ * @a: the string to be converted
  * Return: 0 if no numbers in string, converted number otherwise
- *       -1 on error
+ *         1 on error
  */
 int _errors(char *a)
 {
@@ -29,9 +29,9 @@ int _errors(char *a)
 }
 
 /**
- * print_error - prints an error message
- * @info: the parameter & return info struct
- * @estr: string containing specified error type
+ * print_err - prints an error message
+ * @inf: the parameter & return info struct
+ * @strr: string containing specified error type
  * Return: 0 if no numbers in string, converted number otherwise
  *        -1 on error
  */
@@ -108,7 +108,7 @@ char *con_number(long int num, int base, int flags)
 
 	}
 	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	ptr = &buffer[49];
+	str = &buffer[49];
 	*str = '\0';
 
 	do	{
@@ -122,8 +122,8 @@ char *con_number(long int num, int base, int flags)
 }
 
 /**
- * remove_comments - function replaces first instance of '#' with '\0'
- * @buf: address of the string to modify
+ * rm_comments - function replaces first instance of '#' with '\0'
+ * @buff: address of the string to modify
  *
  * Return: Always 0;
  */
@@ -134,7 +134,7 @@ void rm_comments(char *buff)
 	for (b = 0; buff[b] != '\0'; b++)
 		if (buff[b] == '#' && (!b || buff[b - 1] == ' '))
 		{
-			buf[b] = '\0';
+			buff[b] = '\0';
 			break;
 		}
 }

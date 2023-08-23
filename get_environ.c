@@ -2,7 +2,7 @@
 
 /**
  * _getenviron - returns the string array copy of our environ
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  * Return: Always 0
  */
@@ -14,12 +14,12 @@ char **_getenviron(info_t *inf)
 		inf->env_changed = 0;
 	}
 
-	return (info->environ);
+	return (inf->environ);
 }
 
 /**
  * _unsetenv - Remove an environment variable
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *  Return: 1 on delete, 0 otherwise
  * @var: the string env var property
@@ -38,9 +38,9 @@ int _unsetenv(info_t *inf, char *var)
 		a = starts_with(mode->str, var);
 		if (a && *a == '=')
 		{
-			info->env_changed = delete_node_at_index(&(inf->env), i);
+			inf->env_changed = delete_node_at_index(&(inf->env), b);
 			b = 0;
-			node = inf->env;
+			mode = inf->env;
 			continue;
 		}
 		mode = mode->next;
@@ -52,7 +52,7 @@ int _unsetenv(info_t *inf, char *var)
 /**
  * _setenv - Initialize a new environment variable,
  *             or modify an existing one
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  * @var: the string env var property
  * @value: the string env var value
@@ -86,7 +86,7 @@ int _setenv(info_t *inf, char *var, char *value)
 		}
 		mode = mode->next;
 	}
-	add_mode_end(&(info->env), buff, 0);
+	add_mode_end(&(inf->env), buff, 0);
 	free(buff);
 	inf->env_changed = 1;
 	return (0);

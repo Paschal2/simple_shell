@@ -2,7 +2,7 @@
 
 /**
  * _ourexit - exits the shell
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  * constant function prototype. by Paschal and Co.
  * Return: exits with a given exit status
  * (0) if info.argv[0] != "exit"
@@ -31,7 +31,7 @@ int _ourexit(info_t *inf)
 
 /**
  * _ourcd - changes the current directory of the process
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  * constant function prototype.
  * Return: Always 0
  */
@@ -68,7 +68,7 @@ int _ourcd(info_t *inf)
 		chbdr_ret = chbdr(inf->argv[1]);
 	if (chbdr_ret == -1)
 	{
-		print_error(inf, "can't cd to ");
+		print_err(inf, "can't cd to ");
 		_eputs(inf->argv[1]), _eputchar('\n');
 	}
 	else
@@ -81,7 +81,7 @@ int _ourcd(info_t *inf)
 
 /**
  * _ourhelp - changes the current directory of the process
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  * constant function prototype.
  * Return: Always 0
  */

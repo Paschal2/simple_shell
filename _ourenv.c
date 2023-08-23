@@ -2,7 +2,7 @@
 
 /**
  * _ourenv - prints the current environment
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  * Return: Always 0
  */
@@ -14,22 +14,22 @@ int _ourenv(info_t *inf)
 
 /**
  * _getenv - gets the value of an environ variable
- * @info: Structure containing potential arguments. Used to maintain
- * @name: env var name
+ * @inf: Structure containing potential arguments. Used to maintain
+ * @nam: env var name
  *
  * Return: the value
  */
 char *_getenv(info_t *inf, const char *nam)
 {
-	list_t *mode = inf->env;
+	list_t *node = inf->env;
 	char *a;
 
-	while (mode)
+	while (node)
 	{
-		a = starts_with(mode->str, nam);
+		a = starts_with(node->str, nam);
 		if (a && *a)
 			return (a);
-		mode = mode->next;
+		node = node->next;
 	}
 	return (NULL);
 }
@@ -37,7 +37,7 @@ char *_getenv(info_t *inf, const char *nam)
 /**
  * _oursetenv - Initialize a new environment variable,
  *             or modify an existing one
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *  Return: Always 0
  */
@@ -55,7 +55,7 @@ int _oursetenv(info_t *inf)
 
 /**
  * _ourunsetenv - Remove an environment variable
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  * Return: Always 0
  */
@@ -76,17 +76,17 @@ int _ourunsetenv(info_t *inf)
 
 /**
  * pop_env_list - populates env linked list
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  * Return: Always 0
  */
 int pop_env_list(info_t *inf)
 {
-	list_t *mode = NULL;
+	list_t *node = NULL;
 	size_t b;
 
 	for (b = 0; environ[b]; b++)
-		add_mode_end(&mode, environ[b], 0);
-	inf->env = mode;
+		add_mode_end(&node, environ[b], 0);
+	inf->env = node;
 	return (0);
 }

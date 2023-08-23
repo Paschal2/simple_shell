@@ -2,7 +2,7 @@
 
 /**
  * _strlen - returns the length of a string
- * @s: the string whose length to check
+ * @a: the string whose length to check
  *
  * Return: integer length of string
  */
@@ -43,7 +43,7 @@ int _strcmp(char *a1, char *b2)
 /**
  * starts_with - checks if needle starts with haystack
  * @haystack: string to search
- * @needle: the substring to find
+ * @needless: the substring to find
  *
  * Return: address of next char of haystack or NULL
  */
@@ -57,7 +57,7 @@ char *starts_with(const char *haystack, const char *needless)
 
 /**
  * _strcat - concatenates two strings
- * @dest: the destination buffer
+ * @det: the destination buffer
  * @src: the source buffer
  *
  * Return: pointer to destination buffer

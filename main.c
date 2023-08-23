@@ -2,8 +2,8 @@
 
 /**
  * main - entry point
- * @ac: arg count
- * @av: arg vector
+ * @bc: function to process data with parameter
+ * @av: function to process data with parameter
  *
  * Return: 0 on success, 1 on error
  */
@@ -37,7 +37,7 @@ int main(int bc, char **av)
 		}
 		inf->readfd = sd;
 	}
-	populate_env_list(inf);
+	pop_env_list(inf);
 	read_history(inf);
 	hsh(inf, av);
 	return (EXIT_SUCCESS);

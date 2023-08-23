@@ -3,7 +3,7 @@
 /**
  * _ourhistory - displays the history list, one command by line, preceded
  *              with line numbers, starting at 0.
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *  Return: Always 0
  */
@@ -14,47 +14,47 @@ int _ourhistory(info_t *inf)
 }
 
 /**
- * onset_aliaz - sets alias to string
- * @info: parameter struct
+ * onset_alias - sets alias to string
+ * @inf: parameter struct
  * @str: the string alias
  *
  * Return: Always 0 on success, 1 on error
  */
-int onset_alias(info_t *inf, char *strr)
+int onset_alias(info_t *inf, char *str)
 {
 	char *a, b;
 	int rett;
 
-	a = _strrchr(strr, '=');
+	a = _strchr(str, '=');
 	if (!a)
 		return (1);
 	b = *a;
 	*a = 0;
 	rett = delete_node_at_index(&(inf->alias),
-		get_node_index(inf->alias, node_starts_with(inf->alias, strr, -1)));
+		get_node_index(inf->alias, node_starts_with(inf->alias, str, -1)));
 	*a = b;
 	return (rett);
 }
 
 /**
  * set_alias - sets alias to string
- * @info: parameter struct
+ * @inf: parameter struct
  * @str: the string alias
  *
  * Return: Always 0 on success, 1 on error
  */
-int set_alias(info_t *inf, char *strr)
+int set_alias(info_t *inf, char *str)
 {
 	char *a;
 
-	a = _strrchr(strr, '=');
-	if (!p)
+	a = _strchr(str, '=');
+	if (!a)
 		return (1);
 	if (!*++a)
-		return (onset_alias(inf, strr));
+		return (onset_alias(inf, str));
 
-	onset_alias(inf, strr);
-	return (add_node_end(&(inf->alias), strr, 0) == NULL);
+	onset_alias(inf, str);
+	return (add_mode_end(&(inf->alias), str, 0) == NULL);
 }
 
 /**
@@ -63,14 +63,14 @@ int set_alias(info_t *inf, char *strr)
  *
  * Return: Always 0 on success, 1 on error
  */
-int print_alias(list_t *mode)
+int print_alias(list_t *node)
 {
 	char *a = NULL, *b = NULL;
 
-	if (mode)
+	if (node)
 	{
-		a = _strrchr(mode->strr, '=');
-		for (b = mode->strr; b <= a; b++)
+		a = _strchr(node->str, '=');
+		for (b = node->str; b <= a; b++)
 		_putchar(*b);
 		_putchar('\'');
 		_puts(a + 1);
@@ -82,7 +82,7 @@ int print_alias(list_t *mode)
 
 /**
  * _ouralias - mimics the alias builtin (man alias)
- * @info: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: Always 0
  */
@@ -90,25 +90,25 @@ int _ouralias(info_t *inf)
 {
 	int b = 0;
 	char *a = NULL;
-	list_t *mode = NULL;
+	list_t *node = NULL;
 
 	if (inf->argc == 1)
 	{
-		mode = inf->alias;
-		while (mode)
+		node = inf->alias;
+		while (node)
 		{
-			print_alias(mode);
-			mode = mode->next;
+			print_alias(node);
+			node = node->next;
 		}
 		return (0);
 	}
 	for (b = 1; inf->argv[b]; b++)
 	{
-		a = _strrchr(inf->argv[b], '=');
+		a = _strchr(inf->argv[b], '=');
 		if (a)
 			set_alias(inf, inf->argv[b]);
 		else
-			print_alias(mode_starts_with(inf->alias, inf->argv[b], '='));
+			print_alias(node_starts_with(inf->alias, inf->argv[b], '='));
 	}
 
 	return (0);

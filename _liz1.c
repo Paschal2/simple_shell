@@ -82,20 +82,20 @@ size_t print_list(const list_t *h)
  * node_starts_with - returns node whose string starts with prefix
  * @node: pointer to list head
  * @prefix: string to match
- * @c: the next character after prefix to match
+ * @b: the next character after prefix to match
  *
  * Return: match node or null
  */
-list_t *node_starts_with(list_t *mode, char *prefix, char b)
+list_t *node_starts_with(list_t *node, char *prefix, char b)
 {
 	char *a = NULL;
 
-	while (mode)
+	while (node)
 	{
-		a = starts_with(mode->str, prefix);
+		a = starts_with(node->str, prefix);
 		if (a && ((b == -1) || (*a == b)))
-			return (mode);
-		mode = mode->next;
+			return (node);
+		node = node->next;
 	}
 	return (NULL);
 }
@@ -107,7 +107,7 @@ list_t *node_starts_with(list_t *mode, char *prefix, char b)
  *
  * Return: index of node or -1
  */
-ssize_t get_mode_index(list_t *head, list_t *mode)
+ssize_t get_mode_index(list_t *head, list_t *node)
 {
 	size_t b = 0;
 
