@@ -116,7 +116,7 @@ int build_history_list(info_t *inf, char *buff, int linecount)
 
 	if (inf->history)
 		node = inf->history;
-	add_mode_end(&node, buff, linecount);
+	add_node_end(&node, buff, linecount);
 
 	if (!inf->history)
 		inf->history = node;

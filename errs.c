@@ -2,19 +2,19 @@
 
 /**
  * _eputs - prints an input string
- * @strr: the string to be printed
+ * @str: the string to be printed
  *
  * Return: Nothing
  */
-void _eputs(char *strr)
+void _eputs(char *str)
 {
 	int b = 0;
 
-	if (!strr)
+	if (!str)
 		return;
-	while (strr[b] != '\0')
+	while (str[b] != '\0')
 	{
-		_eputchar(strr[b]);
+		_eputchar(str[b]);
 		b++;
 	}
 }
@@ -66,20 +66,20 @@ int _putfd(char a, int fd)
 
 /**
  * _putsfd - prints an input string
- * @strr: the string to be printed
+ * @str: the string to be printed
  * @fd: the filedescriptor to write to
  *
  * Return: the number of chars put
  */
-int _putsfd(char *strr, int fd)
+int _putsfd(char *str, int fd)
 {
 	int b = 0;
 
-	if (!strr)
+	if (!str)
 		return (0);
-	while (*strr)
+	while (*str)
 	{
-		b += _putfd(*strr++, fd);
+		b += _putfd(*str++, fd);
 	}
 	return (b);
 }

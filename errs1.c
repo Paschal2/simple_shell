@@ -31,11 +31,11 @@ int _errors(char *a)
 /**
  * print_err - prints an error message
  * @inf: the parameter & return info struct
- * @strr: string containing specified error type
+ * @str: string containing specified error type
  * Return: 0 if no numbers in string, converted number otherwise
  *        -1 on error
  */
-void print_err(info_t *inf, char *strr)
+void print_err(info_t *inf, char *str)
 {
 	_eputs(inf->fname);
 	_eputs(": ");
@@ -43,7 +43,7 @@ void print_err(info_t *inf, char *strr)
 	_eputs(": ");
 	_eputs(inf->argv[0]);
 	_eputs(": ");
-	_eputs(strr);
+	_eputs(str);
 }
 
 /**
@@ -123,7 +123,7 @@ char *con_number(long int num, int base, int flags)
 
 /**
  * remove_comments - function replaces first instance of '#' with '\0'
- * @buf: address of the string to modify
+ * @buff: address of the string to modify
  *
  * Return: Always 0;
  */

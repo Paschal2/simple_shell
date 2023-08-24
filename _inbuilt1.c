@@ -54,7 +54,7 @@ int set_alias(info_t *inf, char *str)
 		return (onset_alias(inf, str));
 
 	onset_alias(inf, str);
-	return (add_mode_end(&(inf->alias), str, 0) == NULL);
+	return (add_node_end(&(inf->alias), str, 0) == NULL);
 }
 
 /**

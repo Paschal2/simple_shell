@@ -26,24 +26,24 @@ char **_getenviron(info_t *inf)
  */
 int _unsetenv(info_t *inf, char *var)
 {
-	list_t *mode = inf->env;
+	list_t *node = inf->env;
 	size_t b = 0;
 	char *a;
 
-	if (!mode || !var)
+	if (!node || !var)
 		return (0);
 
-	while (mode)
+	while (node)
 	{
-		a = starts_with(mode->str, var);
+		a = starts_with(node->str, var);
 		if (a && *a == '=')
 		{
 			inf->env_changed = delete_node_at_index(&(inf->env), b);
 			b = 0;
-			mode = inf->env;
+			node = inf->env;
 			continue;
 		}
-		mode = mode->next;
+		node = node->next;
 		b++;
 	}
 	return (inf->env_changed);
@@ -61,7 +61,7 @@ int _unsetenv(info_t *inf, char *var)
 int _setenv(info_t *inf, char *var, char *value)
 {
 	char *buff = NULL;
-	list_t *mode;
+	list_t *node;
 	char *a;
 
 	if (!var || !value)
@@ -73,20 +73,20 @@ int _setenv(info_t *inf, char *var, char *value)
 	_strcpy(buff, var);
 	_strcat(buff, "=");
 	_strcat(buff, value);
-	mode = inf->env;
-	while (mode)
+	node = inf->env;
+	while (node)
 	{
-		a = starts_with(mode->str, var);
+		a = starts_with(node->str, var);
 		if (a && *a == '=')
 		{
-			free(mode->str);
-			mode->str = buff;
+			free(node->str);
+			node->str = buff;
 			inf->env_changed = 1;
 			return (0);
 		}
-		mode = mode->next;
+		node = node->next;
 	}
-	add_mode_end(&(inf->env), buff, 0);
+	add_node_end(&(inf->env), buff, 0);
 	free(buff);
 	inf->env_changed = 1;
 	return (0);
