@@ -70,5 +70,5 @@ int _ototr(char *a)
 	else
 		output = result;
 
-	return (0);
+	return (output); /*Return the value of 'output' instead of 0*/
 }

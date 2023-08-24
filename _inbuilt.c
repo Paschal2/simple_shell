@@ -7,17 +7,19 @@
  * Return: exits with a given exit status
  * (0) if info.argv[0] != "exit"
  */
+
 int _ourexit(info_t *inf)
 {
 	int exitcheck;
 
+	if (_erratoi)i /* Declaration for _erratoi function*/
 	if (inf->argv[1]) /* If there is an exit arguement */
 	{
 		exitcheck = _erratoi(inf->argv[1]);
 		if (exitcheck == -1)
 		{
 			inf->status = 2;
-			print_error(inf, "Illegal number: ");
+			print_err(inf, "Illegal number: ");
 			_eputs(inf->argv[1]);
 			_eputchar('\n');
 			return (1);
