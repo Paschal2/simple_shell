@@ -12,7 +12,6 @@ int _ourexit(info_t *inf)
 {
 	int exitcheck;
 
-	if (inf->argv[1]) /* If there is an exit arguement */
 	{
 		exitcheck = _errors(inf->argv[1]);
 		if (exitcheck == -1)
