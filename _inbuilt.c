@@ -12,10 +12,9 @@ int _ourexit(info_t *inf)
 {
 	int exitcheck;
 
-	if (_erratoi)i /* Declaration for _erratoi function*/
 	if (inf->argv[1]) /* If there is an exit arguement */
 	{
-		exitcheck = _erratoi(inf->argv[1]);
+		exitcheck = _errors(inf->argv[1]);
 		if (exitcheck == -1)
 		{
 			inf->status = 2;
@@ -24,7 +23,7 @@ int _ourexit(info_t *inf)
 			_eputchar('\n');
 			return (1);
 		}
-		inf->err_num = _erratoi(inf->argv[1]);
+		inf->err_num = _errors(inf->argv[1]);
 		return (-2);
 	}
 	inf->err_num = -1;
@@ -39,20 +38,20 @@ int _ourexit(info_t *inf)
  */
 int _ourcd(info_t *inf)
 {
-	char *x, *bdr, buffer[1024];
-	int chbdr_ret;
+	char *x, *dir, buffer[1024];
+	int chdir_ret;
 
 	x = getcwd(buffer, 1024);
 	if (!x)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!inf->argv[1])
 	{
-		bdr = _getenv(inf, "HOME=");
-		if (!bdr)
-			chbdr_ret = /* TODO: what should this be? */
-				chbdr((bdr = _getenv(inf, "PWD=")) ? bdr : "/");
+		dir = _getenv(inf, "HOME=");
+		if (!dir)
+			chdir_ret = /* TODO: what should this be? */
+				chdir((dir = _getenv(inf, "PWD=")) ? dir : "/");
 		else
-			chbdr_ret = chbdr(bdr);
+			chdir_ret = chdir(dir);
 	}
 	else if (_strcmp(inf->argv[1], "-") == 0)
 	{
@@ -63,12 +62,12 @@ int _ourcd(info_t *inf)
 			return (1);
 		}
 		_puts(_getenv(inf, "OLDPWD=")), _putchar('\n');
-		chbdr_ret = /* TODO: what should this be? */
-			chbdr((bdr = _getenv(inf, "OLDPWD=")) ? bdr : "/");
+		chdir_ret = /* TODO: what should this be? */
+			chdir((dir = _getenv(inf, "OLDPWD=")) ? dir : "/");
 	}
 	else
-		chbdr_ret = chbdr(inf->argv[1]);
-	if (chbdr_ret == -1)
+		chdir_ret = chdir(inf->argv[1]);
+	if (chdir_ret == -1)
 	{
 		print_err(inf, "can't cd to ");
 		_eputs(inf->argv[1]), _eputchar('\n');

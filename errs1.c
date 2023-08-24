@@ -108,7 +108,7 @@ char *con_number(long int num, int base, int flags)
 
 	}
 	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	str = &buffer[49];
+	ptr = &buffer[49];
 	*str = '\0';
 
 	do	{
@@ -122,8 +122,8 @@ char *con_number(long int num, int base, int flags)
 }
 
 /**
- * rm_comments - function replaces first instance of '#' with '\0'
- * @buff: address of the string to modify
+ * remove_comments - function replaces first instance of '#' with '\0'
+ * @buf: address of the string to modify
  *
  * Return: Always 0;
  */
@@ -134,7 +134,7 @@ void rm_comments(char *buff)
 	for (b = 0; buff[b] != '\0'; b++)
 		if (buff[b] == '#' && (!b || buff[b - 1] == ' '))
 		{
-			buff[b] = '\0';
+			buf[b] = '\0';
 			break;
 		}
 }
