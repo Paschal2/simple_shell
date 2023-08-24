@@ -67,7 +67,7 @@ size_t print_list(const list_t *h)
 
 	while (h)
 	{
-		_puts(convert_number(h->num, 10, 0));
+		_puts(con_number(h->num, 10, 0));
 		_putchar(':');
 		_putchar(' ');
 		_puts(h->str ? h->str : "(nil)");
@@ -107,13 +107,13 @@ list_t *node_starts_with(list_t *node, char *prefix, char b)
  *
  * Return: index of node or -1
  */
-ssize_t get_mode_index(list_t *head, list_t *node)
+ssize_t get_node_index(list_t *head, list_t *node)
 {
 	size_t b = 0;
 
 	while (head)
 	{
-		if (head == mode)
+		if (head == node)
 			return (b);
 		head = head->next;
 		b++;
