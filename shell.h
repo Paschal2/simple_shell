@@ -167,7 +167,7 @@ void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* toem_atoi.c */
-int mode(info_t *);
+int active(info_t *);
 int is_meter(char, char *);
 int _isbetic(int);
 int _ototr(char *);
