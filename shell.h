@@ -129,8 +129,7 @@ char *find_path(info_t *, char *, char *);
 int hsh(info_t *, char **);
 int find_builltin(info_t *);
 void find_cmd(info_t *);
-void fork_cmd(info_t *inf);
-int active(info_ *inf)
+void fork_cmd(info_t *info);
 
 /* toem_errors.c */
 void _eputs(char *);

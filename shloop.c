@@ -8,6 +8,7 @@
  * Return: 0 on success, 1 on error, or error code
  */
 int hsh(info_t *inf, char **av)
+int active(info_t *inf)
 {
 	ssize_t s = 0;
 	int builtin_ret = 0;
