@@ -108,7 +108,7 @@ char *con_number(long int num, int base, int flags)
 
 	}
 	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	ptr = &buffer[49];
+	str = &buffer[49];
 	*str = '\0';
 
 	do	{
@@ -134,7 +134,7 @@ void rm_comments(char *buff)
 	for (b = 0; buff[b] != '\0'; b++)
 		if (buff[b] == '#' && (!b || buff[b - 1] == ' '))
 		{
-			buf[b] = '\0';
+			buff[b] = '\0';
 			break;
 		}
 }
